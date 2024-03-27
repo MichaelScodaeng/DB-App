@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="DB_App.MVMM.View.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DB_App.MVMM.View"
+             mc:Ignorable="d" Style="{StaticResource UserAll}" >
+
+    <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="1" Background="White" CornerRadius="40">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
+            <TextBlock Text="DumBlack RDMS Application" FontSize="48" Foreground="{StaticResource PrimaryColorBrush}" FontWeight="Bold" 
+                       HorizontalAlignment="Center" Width="709" TextAlignment="Center" />
+            <TextBlock Text="แอพลิเคชั่นสำหรับการจัดการฐานข้อมูล ค้นหา เพิ่ม แก้ไข และลบข้อมูลของบริษัท DumBlack E-commerce" TextAlignment="Center" 
+                       TextWrapping="Wrap" Width="637" FontSize="30" Foreground="{StaticResource PrimaryColorBrush}" 
+                       FontWeight="Normal"/>
+            <TextBlock Text="ศึกษาข้อมูลเพิ่มเติมได้ที่ www.dumblackinc.com" TextAlignment="Center" 
+                       TextWrapping="Wrap" Width="637" FontSize="30" Foreground="{StaticResource AccentGreyColorBrush}" 
+                       FontWeight="Normal" Margin="0,24,0,0"/>
+        </StackPanel>
+    </Border>
+</UserControl>
