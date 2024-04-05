@@ -43,7 +43,7 @@
                 <!--Insert-->
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Insert" VerticalAlignment="Center"></TextBlock>
                 <TextBox Grid.Row="1" Grid.Column="1" Height="50"
-                         VerticalAlignment="Center" Style="{StaticResource ModernTextBox}" x:Name="NameInsertTextBox"
+                         VerticalAlignment="Center"  x:Name="NameInsertTextBox"
                          />
                 <Button Grid.Row="1" Grid.Column="2" x:Name="NameInsertButton" VerticalAlignment="Stretch"
                         Background="{StaticResource LightColorBrush}" Content="Insert" FontSize="12" Foreground= "White" BorderThickness="0"
@@ -52,7 +52,7 @@
                 <!--Select-->
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Select" VerticalAlignment="Center"></TextBlock>
                 <TextBox Grid.Row="2" Grid.Column="1" Height="50"
-                    VerticalAlignment="Center" Style="{StaticResource ModernTextBox}" x:Name="NameSelectTextBox"
+                    VerticalAlignment="Center"  x:Name="NameSelectTextBox"
          />
                 <Button Grid.Row="2" Grid.Column="2" x:Name="NameSelectButton" VerticalAlignment="Stretch"
                     Background="{StaticResource LightColorBrush}" Content="Select" FontSize="12" Foreground= "White" BorderThickness="0"
@@ -60,7 +60,7 @@
                 
                 <!--Update-->
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Update" VerticalAlignment="Center"></TextBlock>
-                <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource ModernTextBox}" x:Name="NameUpdateTextBox"
+                <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" x:Name="NameUpdateTextBox"
 />
                 <Button Grid.Row="3" Grid.Column="2" x:Name="NameUpdateButton" VerticalAlignment="Stretch"
                        Background="{StaticResource LightColorBrush}" Content="Update" FontSize="12" Foreground= "White" BorderThickness="0"
