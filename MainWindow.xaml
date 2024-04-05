@@ -6,7 +6,7 @@
         xmlns:viewModel="clr-namespace:DB_App.MVMM.ViewModel"
         xmlns:local="clr-namespace:DB_App"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="Dumblack-RDBMS"
         Height="{Binding SystemParameters.PrimaryScreenHeight}" 
         Width="{Binding SystemParameters.PrimaryScreenWidth}"
         Style="{StaticResource WinAll}">
@@ -26,7 +26,16 @@
                            Foreground="White" FontSize="24"
                            FontFamily="/Fonts/#Poppins" Width="256" TextWrapping="WrapWithOverflow">
                     <InlineUIContainer>
-                        <Image Source="/Resource/logo.png" Height="24" VerticalAlignment="Center"/>
+                        <Image Source="/Resource/logo.png" Height="24" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform X="0" Y="3"/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
                     </InlineUIContainer>
                     <Run>DB-RDBMS</Run>
                 </TextBlock>
@@ -40,22 +49,23 @@
 
                 <RadioButton Content="DB-2" Height="50"
                              Foreground="White" FontSize="24"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Style="{StaticResource MenuButtonTheme}" Command="{Binding DB2ViewCommand}"/>
 
                 <RadioButton Content="DB-3" Height="50" Foreground="Black" FontSize="24"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Style="{StaticResource MenuButtonTheme}" Command="{Binding DB3ViewCommand}"/>
 
                 <RadioButton Content="DB-4" Height="50"
                              FontSize="24"
-                             Style="{StaticResource MenuButtonTheme}" Checked="RadioButton_Checked"/>
+                             Style="{StaticResource MenuButtonTheme}" Checked="RadioButton_Checked"
+                             Command="{Binding DB4ViewCommand}"/>
 
                 <RadioButton Content="DB-5" Height="50"
                              FontSize="24"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Style="{StaticResource MenuButtonTheme}" Command="{Binding DB5ViewCommand}"/>
 
                 <RadioButton Content="About" Height="50"
                              FontSize="24"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Style="{StaticResource MenuButtonTheme}" Command="{Binding AboutViewCommand}"/>
 
                 <RadioButton Content="Exit" Height="50"
                              FontSize="24"
