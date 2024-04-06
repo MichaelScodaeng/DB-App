@@ -25,7 +25,7 @@
                 </Grid.ColumnDefinitions>
                 <DataGrid d:ItemsSource="{d:SampleData ItemCount=10}" Name="DataGridTable" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,10,10" SelectionChanged="DataGrid_SelectionChanged"/>
             </Grid>
-            <Grid Grid.Row="2" Margin="10,10,10,0" VerticalAlignment="Center">
+            <Grid Grid.Row="2" Margin="10,0,10,0" VerticalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -43,7 +43,7 @@
                 <!--Insert-->
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Insert" VerticalAlignment="Center"></TextBlock>
                 <TextBox Grid.Row="1" Grid.Column="1" Height="50"
-                         VerticalAlignment="Center"  x:Name="NameInsertTextBox"
+                         VerticalAlignment="Center" Style="{StaticResource ModernTextBox}" x:Name="NameInsertTextBox"  
                          />
                 <Button Grid.Row="1" Grid.Column="2" x:Name="NameInsertButton" VerticalAlignment="Stretch"
                         Background="{StaticResource LightColorBrush}" Content="Insert" FontSize="12" Foreground= "White" BorderThickness="0"
@@ -68,15 +68,13 @@
 
                 <!--Delete-->
                 <TextBlock Grid.Row="4" Grid.Column="0" Text="Delete" VerticalAlignment="Center"></TextBlock>
-                <Button Grid.Row="4" Grid.Column="2" Name="NameDeleteButton" VerticalAlignment="Stretch"
-                        Background="{StaticResource LightColorBrush}" Content="Delete" FontSize="12" Foreground= "White" BorderThickness="0"
-                        Click="NameDeleteButton_Click"></Button>
-
-
+                <Button Grid.Row="4" Grid.Column="1" Name="NameDeleteButton" VerticalAlignment="Stretch" HorizontalAlignment="Left" Padding="10,0,10,0"
+                        Content="Delete" FontSize="12" Foreground= "White" BorderThickness="0"
+                        Click="NameDeleteButton_Click" Background="#E3242B"></Button>
                 <!--Select Columns-->
                 <TextBlock Grid.Row="5" Grid.Column="0" Text="Show_Column" VerticalAlignment="Center"></TextBlock>
                 <TextBox Grid.Row="5" Grid.Column="1" Height="40"
-                        VerticalAlignment="Center"  x:Name="NameSelectColTextBox"
+                        VerticalAlignment="Center"  x:Name="NameSelectColTextBox" Style="{StaticResource ModernTextBox}"
 />
                 <Button Grid.Row="5" Grid.Column="2" x:Name="NameSelectColButton" VerticalAlignment="Stretch"
                        Background="{StaticResource LightColorBrush}" Content="SelectCol" FontSize="12" Foreground= "White" BorderThickness="0"

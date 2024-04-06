@@ -10,7 +10,7 @@
                         <Grid VerticalAlignment="Stretch" 
                               HorizontalAlignment="Stretch" 
                               Background="{TemplateBinding Background}">
-                            <TextBlock Text ="{TemplateBinding Property=Content}" VerticalAlignment="Center" Margin="25,0,0,0" Foreground="White">          
+                            <TextBlock Text ="{TemplateBinding Property=Content}" VerticalAlignment="Center" Margin="25,0,0,0" Foreground="White">
                             </TextBlock>
                         </Grid>
                     </ControlTemplate>
@@ -23,7 +23,7 @@
 
             </Setter>
         </Style.Setters>
-        
+
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Background" Value="{StaticResource PrimaryColorBrush}">
