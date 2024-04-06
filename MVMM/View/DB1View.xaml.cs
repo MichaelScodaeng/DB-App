@@ -157,13 +157,16 @@ namespace DB_App.MVMM.View
         //InsertButton
         private void NameInsertButton_Click(object sender, RoutedEventArgs e)
         {
-            sqlButton(nameInsertTextBox, NameInsertTextBox, "Insert");
-           
+         
+            MessageBox.Show(NameInsertTextBox.Text);
+            //sqlButton(nameInsertTextBox, NameInsertTextBox, "Insert");
+
         }
 
         //SelectButton
         private void NameSelectButton_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(NameSelectTextBox.Text);
             sqlButton(nameSelectTextBox, NameSelectTextBox, "Select");
 
         }
@@ -181,6 +184,7 @@ namespace DB_App.MVMM.View
         //UpdateButton
         private void NameUpdateButton_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(NameUpdateTextBox.Text);
             sqlButton(nameUpdateTextBox, NameUpdateTextBox, "Update");
 
         }
@@ -190,7 +194,8 @@ namespace DB_App.MVMM.View
         {
 
             TextBox txt  = NameSelectColTextBox;
-            sqlButton(txt.Text, NameSelectColTextBox, "Select Columns");
+            MessageBox.Show(NameSelectColTextBox.Text);
+            //sqlButton(txt.Text, NameSelectColTextBox, "Select Columns");
 
         }
 
