@@ -112,6 +112,19 @@ namespace DB_App.MVMM.View
                 }else if(command == "Select Columns")//project
                 {
                     sql_project = textBoxAppName.Text;
+                    selectedKeys = sql_project.Split(" ");
+                    foreach (string part in selectedKeys)//insert
+                    {
+                        if (!colNames.Contains(part))
+                        {
+                            goodKey = false;
+                            break;
+                        }
+                    }
+                    if(sql_project == "*")
+                    {
+                        goodKey = true;
+                    }
                 }
                 if (goodKey)
                 {
@@ -124,7 +137,7 @@ namespace DB_App.MVMM.View
                         {
                             preCommand += sql_project;
                         }
-                        else
+                        else if(sql_project == "*")
                         {
                             preCommand += "*";
                         }
@@ -134,12 +147,19 @@ namespace DB_App.MVMM.View
                     }
                     using NpgsqlCommand cmd = new NpgsqlCommand(preCommand, connection);
 
-                    using NpgsqlDataReader reader = cmd.ExecuteReader();
+                    try
+                    {
+                        using NpgsqlDataReader reader = cmd.ExecuteReader();
 
                         //Refresh Database
-                    int temp = reader.FieldCount; 
-                    Update_Table(reader);
-                    MessageBox.Show(command +" " + preCommand + " " + temp + " +" + textBoxClassName + "+ complete!");
+                        int temp = reader.FieldCount;
+                        Update_Table(reader);
+                        MessageBox.Show(command + " " + preCommand + " complete!");
+                    }
+                    catch(Exception e)
+                    {
+                        MessageBox.Show(command + " failed because your input is invalid : " + e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
                 else
                 {
