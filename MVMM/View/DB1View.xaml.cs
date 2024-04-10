@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
 using System.Text;
@@ -34,11 +35,10 @@ namespace DB_App.MVMM.View
         NpgsqlCommand cmd;
         List<String> colNames;
         NpgsqlConnection connection;
-        string sql_select;
+        string sql_select = "*";
         string sql_update;
         string sql_project;
-        string[] oper_list = {"=",">=","<=","<",">"};
-        string[] logic_list = { "AND", "OR", "NOT" };
+        DataTable dt;
         public DB1View()
         {
             InitializeComponent();
@@ -47,16 +47,16 @@ namespace DB_App.MVMM.View
 
             connection = new NpgsqlConnection(connectionString);
             connection.Open();
-            
+
             using NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM " + table_name, connection);
-            
+
             using NpgsqlDataReader reader = cmd.ExecuteReader();
-            DataTable dt = new DataTable();
+            dt = new DataTable();
             dt.Load(reader);
 
             int colNum = dt.Columns.Count;
             colNames = new List<string>();
-            for(int i = 0;i< colNum; i++)
+            for (int i = 0; i < colNum; i++)
             {
                 colNames.Add(dt.Columns[i].ColumnName);
             }
@@ -69,7 +69,7 @@ namespace DB_App.MVMM.View
         }
         private int Update_Table(NpgsqlDataReader reader)
         {
-            DataTable dt = new DataTable();
+            dt = new DataTable();
             dt.Load(reader);
             DataGridTable.ItemsSource = dt.DefaultView;
             return 1;
@@ -80,47 +80,77 @@ namespace DB_App.MVMM.View
         }
 
         // Dont forget to add check and sql functions in this function
-        private void sqlButton(string textBoxClassName, TextBox textBoxAppName,string command) 
+        private void sqlButton(string textBoxClassName, TextBox textBoxAppName, string command)
         {
             textBoxClassName = textBoxAppName.Text;
+            string pre_select = sql_select;
+            if (command == "Select" && textBoxClassName == "") textBoxClassName = " ";
             if (textBoxClassName != "")
             {
                 string[] selectedKeys = textBoxClassName.Split(",");
 
-                
-                bool goodKey = true;
-                //Do something to Check
 
-                if(command == "Insert")
+                bool goodKey = true;
+
+                //Do something to Check
+                List<string> keys = new List<string>();
+                List<string> values = new List<string>();
+
+                if (command == "Insert")
                 {
-                    foreach(string part in selectedKeys)//insert
+                    int i = 0;
+                    foreach (string part in selectedKeys)//insert
                     {
                         string[] kk = part.Split("=");
-                        if(kk.Length != 2 || !colNames.Contains(kk[0]))
+                        string key;
+                        string value;
+
+                        if (kk.Length == 1)
+                        {
+                            key = colNames[i];
+                            value = kk[0];
+                            i++;
+                        }
+                        else if (kk.Length != 2 || !colNames.Contains(kk[0]))
                         {
                             goodKey = false;
                             break;
                         }
-                        string key = kk[0];
-                        string value = kk[1];
+                        else
+                        {
+                            key = kk[0];
+                            value = kk[1];
+                        }
+                        keys.Add(key);
+                        values.Add(value);
                     }
-                }else if(command == "Select")//select  +where clause
+                    if (i > colNames.Count)
+                    {
+                        goodKey = false;
+                    }
+                }
+                else if (command == "Select")//select  +where clause
                 {
                     sql_select = textBoxAppName.Text;
                 }
-                else if(command == "Update")//update
+                else if (command == "Update")//update
                 {
 
-                }else if(command == "Select Columns")//project
+                }
+                else if (command == "Select Columns")//project
                 {
                     sql_project = textBoxAppName.Text;
-                    foreach (string part in selectedKeys)
+                    foreach (string part in selectedKeys)//insert
                     {
                         if (!colNames.Contains(part))
                         {
                             goodKey = false;
                             break;
                         }
+                    }
+                    if (sql_project == "*")
+                    {
+                        goodKey = true;
                     }
                 }
                 if (goodKey)
@@ -130,53 +160,88 @@ namespace DB_App.MVMM.View
                     if (command == "Select" || command == "Select Columns")
                     {
                         preCommand = "SELECT ";
-                        if(sql_project != "")
+                        if (sql_project != "")
                         {
                             preCommand += sql_project;
                         }
-                        else
+                        else if (sql_project == "")
                         {
                             preCommand += "*";
                         }
                         preCommand += " FROM " + table_name;
+                        if (sql_select == " ") { sql_select = ""; textBoxAppName.Text = ""; }
                         if (sql_select != "") preCommand += " WHERE " + sql_select;
-                        
+
+                    }
+                    else if (command == "Insert")
+                    {
+                        string key = keys[0];
+                        string value = values[0];
+                        for (int i = 1; i < keys.Count; i++)
+                        {
+                            key += "," + keys[i];
+                            value += "," + values[i];
+                        }
+                        preCommand = "INSERT INTO " + table_name + "(" + key + ")" + "VALUES (" + value + ")";
+                    }
+                    else if (command == "Update")
+                    {
+                        preCommand = "UPDATE " + table_name + " SET " + textBoxClassName;
+                        if (sql_select != "") preCommand += " WHERE " + sql_select;
                     }
                     using NpgsqlCommand cmd = new NpgsqlCommand(preCommand, connection);
 
-                    using NpgsqlDataReader reader = cmd.ExecuteReader();
+                    try
+                    {
+                        using NpgsqlDataReader reader = cmd.ExecuteReader();
 
                         //Refresh Database
-                    int temp = reader.FieldCount; 
-                    Update_Table(reader);
-                    MessageBox.Show(command +" " + preCommand + " " + temp + " +" + textBoxClassName + "+ complete!");
+                        int temp = reader.FieldCount;
+                        if (command == "Insert" || command == "Update")
+                        {
+                            MessageBox.Show(command + " complete! please, refresh by click select button");
+                        }
+                        else
+                        {
+                            Update_Table(reader);
+                            MessageBox.Show(command + " complete!");
+                        }
+
+
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(command + " failed because your input is invalid : " + e.Message + " ** with command ** " + preCommand);
+                        if (command == "Select")
+                        {
+                            sql_select = pre_select;
+                            textBoxAppName.Text = sql_select;
+                        }
+                    }
                 }
                 else
                 {
-                    MessageBox.Show(command + " failed because your input is invalid","Invalid Data", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(command + " failed because your input is invalid", "Invalid Data", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
             }
             else
             {
                 string nullBox = "Null text box";
-                if(textBoxAppName != null) nullBox = textBoxAppName.Name;
+                if (textBoxAppName != null) nullBox = textBoxAppName.Name;
                 MessageBox.Show(command + " failed because you didn't input any data" + nullBox, "Null Input", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         //InsertButton
         private void NameInsertButton_Click(object sender, RoutedEventArgs e)
         {
-         
-            MessageBox.Show(NameInsertTextBox.Text);
-            //sqlButton(nameInsertTextBox, NameInsertTextBox, "Insert");
+            sqlButton(nameInsertTextBox, NameInsertTextBox, "Insert");
 
         }
 
         //SelectButton
         private void NameSelectButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(NameSelectTextBox.Text);
             sqlButton(nameSelectTextBox, NameSelectTextBox, "Select");
 
         }
@@ -184,17 +249,36 @@ namespace DB_App.MVMM.View
         //DeleteButton
         private void NameDeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("Really?", "Delete Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            var result = MessageBox.Show("Delete " + dt.Rows.Count + " items ?", "Delete Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
             {
                 //Delete Command
+                string preCommand = "DELETE FROM " + table_name;
+                if (sql_select != "") preCommand += " WHERE " + sql_select;
+                using NpgsqlCommand cmd = new NpgsqlCommand(preCommand, connection);
+
+                try
+                {
+                    using NpgsqlDataReader reader = cmd.ExecuteReader();
+
+                    //Refresh Database
+                    Update_Table(reader);
+
+                    MessageBox.Show("Delete complete!");
+
+                }
+                catch (Exception exc)
+                {
+                    MessageBox.Show("Delete failed because your input is invalid : " + exc.Message + " ** with command ** " + preCommand);
+                }
+
+
             }
         }
 
         //UpdateButton
         private void NameUpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(NameUpdateTextBox.Text);
             sqlButton(nameUpdateTextBox, NameUpdateTextBox, "Update");
 
         }
