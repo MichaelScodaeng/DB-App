@@ -47,16 +47,16 @@ namespace DB_App.MVMM.View
 
             connection = new NpgsqlConnection(connectionString);
             connection.Open();
-            
+
             using NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM " + table_name, connection);
-            
+
             using NpgsqlDataReader reader = cmd.ExecuteReader();
             dt = new DataTable();
             dt.Load(reader);
 
             int colNum = dt.Columns.Count;
             colNames = new List<string>();
-            for(int i = 0;i< colNum; i++)
+            for (int i = 0; i < colNum; i++)
             {
                 colNames.Add(dt.Columns[i].ColumnName);
             }
@@ -80,37 +80,38 @@ namespace DB_App.MVMM.View
         }
 
         // Dont forget to add check and sql functions in this function
-        private void sqlButton(string textBoxClassName, TextBox textBoxAppName,string command) 
+        private void sqlButton(string textBoxClassName, TextBox textBoxAppName, string command)
         {
             textBoxClassName = textBoxAppName.Text;
             string pre_select = sql_select;
+            if (command == "Select" && textBoxClassName == "") textBoxClassName = " ";
             if (textBoxClassName != "")
             {
                 string[] selectedKeys = textBoxClassName.Split(",");
 
-                
+
                 bool goodKey = true;
-                
+
                 //Do something to Check
                 List<string> keys = new List<string>();
                 List<string> values = new List<string>();
 
-                if(command == "Insert")
+                if (command == "Insert")
                 {
                     int i = 0;
-                    foreach(string part in selectedKeys)//insert
+                    foreach (string part in selectedKeys)//insert
                     {
                         string[] kk = part.Split("=");
                         string key;
                         string value;
 
-                        if(kk.Length == 1)
+                        if (kk.Length == 1)
                         {
                             key = colNames[i];
                             value = kk[0];
                             i++;
                         }
-                        else if(kk.Length != 2 || !colNames.Contains(kk[0]))
+                        else if (kk.Length != 2 || !colNames.Contains(kk[0]))
                         {
                             goodKey = false;
                             break;
@@ -123,18 +124,20 @@ namespace DB_App.MVMM.View
                         keys.Add(key);
                         values.Add(value);
                     }
-                    if(i > colNames.Count)
+                    if (i > colNames.Count)
                     {
                         goodKey = false;
                     }
-                }else if(command == "Select")//select  +where clause
+                }
+                else if (command == "Select")//select  +where clause
                 {
                     sql_select = textBoxAppName.Text;
                 }
-                else if(command == "Update")//update
+                else if (command == "Update")//update
                 {
 
-                }else if(command == "Select Columns")//project
+                }
+                else if (command == "Select Columns")//project
                 {
                     sql_project = textBoxAppName.Text;
                     foreach (string part in selectedKeys)//insert
@@ -145,7 +148,7 @@ namespace DB_App.MVMM.View
                             break;
                         }
                     }
-                    if(sql_project == "*")
+                    if (sql_project == "*")
                     {
                         goodKey = true;
                     }
@@ -157,42 +160,44 @@ namespace DB_App.MVMM.View
                     if (command == "Select" || command == "Select Columns")
                     {
                         preCommand = "SELECT ";
-                        if(sql_project != "")
+                        if (sql_project != "")
                         {
                             preCommand += sql_project;
                         }
-                        else if(sql_project == "")
+                        else if (sql_project == "")
                         {
                             preCommand += "*";
                         }
                         preCommand += " FROM " + table_name;
                         if (sql_select == " ") { sql_select = ""; textBoxAppName.Text = ""; }
-                        if(sql_select != "")preCommand += " WHERE " + sql_select;
-                        
-                    }else if(command == "Insert")
+                        if (sql_select != "") preCommand += " WHERE " + sql_select;
+
+                    }
+                    else if (command == "Insert")
                     {
                         string key = keys[0];
                         string value = values[0];
-                        for(int i = 1; i < keys.Count; i++)
+                        for (int i = 1; i < keys.Count; i++)
                         {
                             key += "," + keys[i];
                             value += "," + values[i];
                         }
                         preCommand = "INSERT INTO " + table_name + "(" + key + ")" + "VALUES (" + value + ")";
-                    }else if(command == "Update")
+                    }
+                    else if (command == "Update")
                     {
                         preCommand = "UPDATE " + table_name + " SET " + textBoxClassName;
                         if (sql_select != "") preCommand += " WHERE " + sql_select;
                     }
                     using NpgsqlCommand cmd = new NpgsqlCommand(preCommand, connection);
-                        
+
                     try
                     {
                         using NpgsqlDataReader reader = cmd.ExecuteReader();
 
                         //Refresh Database
                         int temp = reader.FieldCount;
-                        if(command == "Insert" || command == "Update")
+                        if (command == "Insert" || command == "Update")
                         {
                             MessageBox.Show(command + " complete! please, refresh by click select button");
                         }
@@ -201,13 +206,13 @@ namespace DB_App.MVMM.View
                             Update_Table(reader);
                             MessageBox.Show(command + " complete!");
                         }
-                        
-                        
+
+
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         MessageBox.Show(command + " failed because your input is invalid : " + e.Message + " ** with command ** " + preCommand);
-                        if(command == "Select")
+                        if (command == "Select")
                         {
                             sql_select = pre_select;
                             textBoxAppName.Text = sql_select;
@@ -216,14 +221,14 @@ namespace DB_App.MVMM.View
                 }
                 else
                 {
-                    MessageBox.Show(command + " failed because your input is invalid","Invalid Data", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(command + " failed because your input is invalid", "Invalid Data", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
             }
             else
             {
                 string nullBox = "Null text box";
-                if(textBoxAppName != null) nullBox = textBoxAppName.Name;
+                if (textBoxAppName != null) nullBox = textBoxAppName.Name;
                 MessageBox.Show(command + " failed because you didn't input any data" + nullBox, "Null Input", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -231,7 +236,7 @@ namespace DB_App.MVMM.View
         private void NameInsertButton_Click(object sender, RoutedEventArgs e)
         {
             sqlButton(nameInsertTextBox, NameInsertTextBox, "Insert");
-           
+
         }
 
         //SelectButton
