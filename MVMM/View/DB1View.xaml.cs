@@ -37,6 +37,8 @@ namespace DB_App.MVMM.View
         string sql_select;
         string sql_update;
         string sql_project;
+        string[] oper_list = {"=",">=","<=","<",">"};
+        string[] logic_list = { "AND", "OR", "NOT" };
         public DB1View()
         {
             InitializeComponent();
@@ -112,6 +114,14 @@ namespace DB_App.MVMM.View
                 }else if(command == "Select Columns")//project
                 {
                     sql_project = textBoxAppName.Text;
+                    foreach (string part in selectedKeys)
+                    {
+                        if (!colNames.Contains(part))
+                        {
+                            goodKey = false;
+                            break;
+                        }
+                    }
                 }
                 if (goodKey)
                 {
@@ -192,10 +202,7 @@ namespace DB_App.MVMM.View
         //SelectColButton
         private void NameSelectColButton_Click(object sender, RoutedEventArgs e)
         {
-
-            TextBox txt  = NameSelectColTextBox;
-            MessageBox.Show(NameSelectColTextBox.Text);
-            //sqlButton(txt.Text, NameSelectColTextBox, "Select Columns");
+            sqlButton(nameUpdateTextBox, NameSelectColTextBox, "Select Columns");
 
         }
 
