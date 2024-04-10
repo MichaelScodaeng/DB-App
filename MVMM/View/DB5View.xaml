@@ -6,7 +6,85 @@
              xmlns:local="clr-namespace:DB_App.MVMM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Beige">
-            
-    </Grid>
+    <Border CornerRadius="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="2*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Database-Orders" TextAlignment="Center" FontSize="24"></TextBlock>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <DataGrid d:ItemsSource="{d:SampleData ItemCount=10}" Name="DataGridTable" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,10,10" SelectionChanged="DataGrid_SelectionChanged"/>
+            </Grid>
+            <Grid Grid.Row="2" Margin="10,0,10,0" VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="OPTIONS" VerticalAlignment="Stretch" Grid.ColumnSpan="3" Foreground="{StaticResource DarkColorBrush}"></TextBlock>
+                <!--Insert-->
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Insert" VerticalAlignment="Center"></TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="1" Height="50"
+                         VerticalAlignment="Center" Style="{StaticResource ModernTextBox}" x:Name="NameInsertTextBox"  
+                         />
+                <Button Grid.Row="1" Grid.Column="2" x:Name="NameInsertButton" VerticalAlignment="Stretch"
+                        Background="{StaticResource LightColorBrush}" Content="Insert" FontSize="12" Foreground= "White" BorderThickness="0"
+                        Click="NameInsertButton_Click"></Button>
+
+                <!--Select-->
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Select" VerticalAlignment="Center"></TextBlock>
+                <TextBox Grid.Row="2" Grid.Column="1" Height="50"
+                    VerticalAlignment="Center"  x:Name="NameSelectTextBox" Style="{StaticResource ModernTextBox}"
+         />
+                <Button Grid.Row="2" Grid.Column="2" x:Name="NameSelectButton" VerticalAlignment="Stretch"
+                    Background="{StaticResource LightColorBrush}" Content="Select" FontSize="12" Foreground= "White" BorderThickness="0"
+                    Click="NameSelectButton_Click" Grid.ColumnSpan="2"></Button>
+
+                <!--Update-->
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Update" VerticalAlignment="Center"></TextBlock>
+                <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" x:Name="NameUpdateTextBox" Style="{StaticResource ModernTextBox}"
+/>
+                <Button Grid.Row="3" Grid.Column="2" x:Name="NameUpdateButton" VerticalAlignment="Stretch"
+                       Background="{StaticResource LightColorBrush}" Content="Update" FontSize="12" Foreground= "White" BorderThickness="0"
+                       Click="NameUpdateButton_Click" Grid.ColumnSpan="2"></Button>
+
+                <!--Delete-->
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Delete" VerticalAlignment="Center"></TextBlock>
+                <Button Grid.Row="4" Grid.Column="1" Name="NameDeleteButton"
+                        VerticalAlignment="Stretch" HorizontalAlignment="Left" Padding="10,0,10,0"
+                        Content="Delete" FontSize="12" Foreground= "White" BorderThickness="0"
+                        Click="NameDeleteButton_Click" Background="#E3242B"></Button>
+                <!--Select Columns-->
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Show_Column" VerticalAlignment="Center"></TextBlock>
+                <TextBox Grid.Row="5" Grid.Column="1" Height="40"
+                        VerticalAlignment="Center"  x:Name="NameSelectColTextBox" Style="{StaticResource ModernTextBox}"
+/>
+                <Button Grid.Row="5" Grid.Column="2" x:Name="NameSelectColButton" VerticalAlignment="Stretch"
+                       Background="{StaticResource LightColorBrush}" Content="SelectCol" FontSize="12" Foreground= "White" BorderThickness="0"
+                       Click="NameSelectColButton_Click"></Button>
+
+            </Grid>
+
+
+
+        </Grid>
+    </Border>
 </UserControl>

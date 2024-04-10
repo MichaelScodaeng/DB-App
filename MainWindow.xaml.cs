@@ -36,5 +36,10 @@ namespace DB_App
                 Application.Current.Shutdown();
             }
         }
+
+        private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

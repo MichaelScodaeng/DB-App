@@ -11,7 +11,7 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
                 <TextBlock Text="Made by Dumblack inc." FontSize="48" Foreground="{StaticResource PrimaryColorBrush}" FontWeight="Bold" 
                    HorizontalAlignment="Center" Width="709" TextAlignment="Center" />
-                <TextBlock Text="นายพีรดนย์ สารแก้ว, นายศุภกิตติ์ สร้อยน้ำ, นายเพียงพุทธ เมฆพิพัฒน์พงศ์" TextAlignment="Center" 
+                <TextBlock Text="นายพีรดนย์ สารแก้ว, นายศุภกิตติ์ สร้อยน้ำ, นายเพียงพุทธ เมฆพิพัฒน์พงศ์, นายศิวะกัณฐ์ สุขปั้น" TextAlignment="Center" 
                    TextWrapping="Wrap" Width="637" FontSize="18" Foreground="{StaticResource AccentGreyColorBrush}" 
                    FontWeight="Normal" Margin="0,24,0,0"/>
             </StackPanel>

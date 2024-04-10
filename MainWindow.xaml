@@ -43,23 +43,23 @@
                              Foreground="White" FontSize="24"
                              Style="{StaticResource MenuButtonTheme}"/>
 
-                <RadioButton Content="DB-1" Height="50"
+                <RadioButton Content="DB-Address" Height="50"
                              Foreground="White" FontSize="24"
-                             Style="{StaticResource MenuButtonTheme}"  Command="{Binding DB1ViewCommand}"/>
+                             Style="{StaticResource MenuButtonTheme}"  Command="{Binding DB1ViewCommand}" Checked="RadioButton_Checked_1"/>
 
-                <RadioButton Content="DB-2" Height="50"
+                <RadioButton Content="DB-Customer" Height="50"
                              Foreground="White" FontSize="24"
                              Style="{StaticResource MenuButtonTheme}" Command="{Binding DB2ViewCommand}"/>
 
-                <RadioButton Content="DB-3" Height="50" Foreground="Black" FontSize="24"
+                <RadioButton Content="DB-Employee" Height="50" Foreground="Black" FontSize="24"
                              Style="{StaticResource MenuButtonTheme}" Command="{Binding DB3ViewCommand}"/>
 
-                <RadioButton Content="DB-4" Height="50"
+                <RadioButton Content="DB-Item" Height="50"
                              FontSize="24"
                              Style="{StaticResource MenuButtonTheme}" Checked="RadioButton_Checked"
                              Command="{Binding DB4ViewCommand}"/>
 
-                <RadioButton Content="DB-5" Height="50"
+                <RadioButton Content="DB-Orders" Height="50"
                              FontSize="24"
                              Style="{StaticResource MenuButtonTheme}" Command="{Binding DB5ViewCommand}"/>
 
